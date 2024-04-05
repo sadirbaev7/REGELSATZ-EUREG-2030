@@ -11,7 +11,7 @@ rule "Behoerde-Quellen-Flaeche-Fehler-Land_16"
     dialect "java"
     agenda-group "KOMPLEXPRUEFUNG_16_BEHOERDE"
 when
-    $rumeUploadDto : EURegRumeUploadDto( data != null )
+    $rumeUploadDto : EURegRumeUploadDto( data != null, data.anlage != null )
     $anlage : AnlageRumeDto() from $rumeUploadDto.getData().getAnlage().getAnlage()
     exists QuelleEuRegRumeDto( flaeche != null, flaeche >= 250 ) from $anlage.getQuellen()
     $teilergebnis : KpTeilergebnisDto()
