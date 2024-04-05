@@ -1,0 +1,14 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.EURegRumeUploadDto;
+import de.wps.bube.basis.base.rume.dto.anlage.AnlageRumeDto;
+import java.util.List;
+
+rule "aa-Anlage-aus-Vorjahr-fehlt"
+	dialect "mvel"
+	when
+		rumeupload : EURegRumeUploadDto( data != null , dataVorjahr != null )
+		(anlage : AnlageRumeDto( ) from rumeupload.data.anlage.anlage)
+		(anlagevj : AnlageRumeDto( ) from rumeupload.dataVorjahr.anlage.anlage)
+		AnlageRumeDto( betriebsstatus.schluessel)
+	then
+end

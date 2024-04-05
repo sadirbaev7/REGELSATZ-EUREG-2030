@@ -1,0 +1,9 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.RumeUploadDto;
+
+rule "aa-ausser-betrieb"
+	dialect "mvel"
+	when
+		RumeUploadDto( betriebsstaette != null , betriebsstaette.betriebsstatus != null , betriebsstaette.betriebsstatus.schluessel == "02" )
+	then
+end

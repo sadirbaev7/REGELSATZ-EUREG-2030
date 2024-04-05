@@ -1,0 +1,20 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.EURegRumeUploadDto;
+import de.wps.bube.basis.base.rume.dto.KpTeilergebnisDto;
+import de.wps.bube.basis.base.rume.dto.KpRegelergebnisDto;
+import de.wps.bube.basis.base.rume.dto.EURegItemDto;
+import de.wps.bube.basis.base.rume.dto.anlage.QuelleEuRegRumeDto;
+import de.wps.bube.basis.base.rume.dto.anlage.EURegAnlageRumeDto;
+import de.wps.bube.basis.base.rume.dto.anlage.AnlageRumeDto;
+
+rule "Behoerde-Quellen-Flaeche-Fehler-Land_08"
+    dialect "java"
+    agenda-group "KOMPLEXPRUEFUNG_08_BEHOERDE"
+when
+    $rumeUploadDto : EURegRumeUploadDto( data != null )
+    $anlage : AnlageRumeDto() from $rumeUploadDto.getData().getAnlage().getAnlage()
+    exists QuelleEuRegRumeDto( flaeche != null, flaeche >= 250 ) from $anlage.getQuellen()
+    $teilergebnis : KpTeilergebnisDto()
+then
+    $teilergebnis.addRegelergebnisFehler( "Flaeche ist außerhalb der Grenzen", "Behoerde-Quellen-Flaeche-Fehler-Land_08", "Flaeche kann nicht genehmigt werden" );
+end

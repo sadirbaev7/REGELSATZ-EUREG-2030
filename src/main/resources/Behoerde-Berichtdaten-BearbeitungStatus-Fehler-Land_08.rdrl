@@ -1,0 +1,15 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.EURegRumeUploadDto;
+import de.wps.bube.basis.base.rume.dto.KpTeilergebnisDto;
+import de.wps.bube.basis.base.rume.dto.KpRegelergebnisDto;
+import de.wps.bube.basis.base.rume.dto.EURegItemDto;
+
+rule "Behoerde-Berichtdaten-BearbeitungStatus-Fehler-Land_08"
+	dialect "java"
+	agenda-group "KOMPLEXPRUEFUNG_08_BEHOERDE"
+	when
+		EURegRumeUploadDto( data != null , (getData().getBetriebsstaette().getBerichtsdaten().getBearbeitungsstatus().getSchluessel() == "00" || getData().getBetriebsstaette().getBerichtsdaten().getBearbeitungsstatus().getSchluessel() == "01"))
+		teilergebnis : KpTeilergebnisDto( )
+	then
+		teilergebnis.addRegelergebnisFehler( "Bearbeitungstatus muss bin in durch Behoerde", "Behoerde-Berichtdaten-BearbeitungStatus-Fehler-Land_08", "Bearbeitungsstatus muss geändert werden" );
+end

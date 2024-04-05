@@ -1,0 +1,15 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.EURegRumeUploadDto;
+import de.wps.bube.basis.base.rume.dto.KpTeilergebnisDto;
+import de.wps.bube.basis.base.rume.dto.KpRegelergebnisDto;
+import de.wps.bube.basis.base.rume.dto.EURegItemDto;
+
+rule "Behoerde-Anlage-Betriebsstatus-Warnung-Land_02"
+	dialect "java"
+	agenda-group "KOMPLEXPRUEFUNG_02_BEHOERDE"
+	when
+		EURegRumeUploadDto( data != null , getData().getAnlage().getAnlage().getBetriebsstatus() != null , (getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "02" && getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "01"))
+		teilergebnis : KpTeilergebnisDto( )
+	then
+		teilergebnis.addRegelergebnisWarnung( "Betriebsstatus sollte In Betrieb sein", "Behoerde-Anlage-Betriebsstatus-Warnung-Land_02", "Betriebsstatus sollte geändert werden" );
+end

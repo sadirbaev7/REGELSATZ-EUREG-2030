@@ -1,0 +1,12 @@
+import java.lang.Number;
+import de.wps.bube.basis.base.rume.dto.KpTeilergebnisDto;
+
+rule "aa-Behoerde-ausser-betrieb-Bund" extends "aa-ausser-betrieb"
+	dialect "mvel"
+	enabled true
+	agenda-group "KOMPLEXPRUEFUNG_BEHOERDE"
+	when
+		teilergebnis : KpTeilergebnisDto( )
+	then
+		teilergebnis.addRegelergebnisFehler( "BSt ausser Betrieb (Bund, Behoerde)", drools.getRule().getName(), "BSt ausser Betrieb" );
+end
