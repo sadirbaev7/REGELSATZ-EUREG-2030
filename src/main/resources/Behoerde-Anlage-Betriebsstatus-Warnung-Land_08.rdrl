@@ -8,7 +8,7 @@ rule "Behoerde-Anlage-Betriebsstatus-Warnung-Land_08"
 	dialect "java"
 	agenda-group "KOMPLEXPRUEFUNG_08_BEHOERDE"
 	when
-		EURegRumeUploadDto( data != null , getData().getAnlage().getAnlage().getBetriebsstatus() != null , (getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "02" && getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "01"))
+		EURegRumeUploadDto( data != null, getData().getAnlage() != null, getData().getAnlage().getAnlage().getBetriebsstatus() != null , (getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "02" && getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() != "01"))
 		teilergebnis : KpTeilergebnisDto( )
 	then
 		teilergebnis.addRegelergebnisWarnung( "Betriebsstatus sollte In Betrieb sein", "Behoerde-Anlage-Betriebsstatus-Warnung-Land_08", "Betriebsstatus sollte geändert werden" );

@@ -8,7 +8,7 @@ rule "Behoerde-Anlage-Betriebsstatus-Fehler-Land_16"
 	dialect "java"
 	agenda-group "KOMPLEXPRUEFUNG_16_BEHOERDE"
 	when
-		EURegRumeUploadDto( data != null , getData().getAnlage().getAnlage().getBetriebsstatus() == null || getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() == "02"  )
+		EURegRumeUploadDto( data != null, getData().getAnlage() != null, getData().getAnlage().getAnlage().getBetriebsstatus() == null || getData().getAnlage().getAnlage().getBetriebsstatus().getSchluessel() == "02"  )
 		teilergebnis : KpTeilergebnisDto( )
 	then
 		teilergebnis.addRegelergebnisFehler( "Betriebsstatus muss nicht bin außer Betrieb", "Behoerde-Anlage-Betriebsstatus-Fehler-Land_16", "Betriebsstatus muss geändert werden" );

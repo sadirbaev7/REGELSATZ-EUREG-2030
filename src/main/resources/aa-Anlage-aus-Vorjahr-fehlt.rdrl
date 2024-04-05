@@ -6,7 +6,7 @@ import java.util.List;
 rule "aa-Anlage-aus-Vorjahr-fehlt"
 	dialect "mvel"
 	when
-		rumeupload : EURegRumeUploadDto( data != null , dataVorjahr != null )
+		rumeupload : EURegRumeUploadDto( data != null, getData().getAnlage() != null, dataVorjahr != null )
 		(anlage : AnlageRumeDto( ) from rumeupload.data.anlage.anlage)
 		(anlagevj : AnlageRumeDto( ) from rumeupload.dataVorjahr.anlage.anlage)
 		AnlageRumeDto( betriebsstatus.schluessel)
